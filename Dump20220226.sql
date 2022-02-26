@@ -16,6 +16,59 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `customer`
+--
+
+DROP TABLE IF EXISTS `customer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `customer` (
+  `CustID` int NOT NULL,
+  `Password` varchar(45) NOT NULL,
+  `Income` float NOT NULL,
+  `Credit Score` float NOT NULL,
+  `AadharNo` decimal(12,0) unsigned NOT NULL,
+  PRIMARY KEY (`CustID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customer`
+--
+
+LOCK TABLES `customer` WRITE;
+/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fixeddeposits`
+--
+
+DROP TABLE IF EXISTS `fixeddeposits`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fixeddeposits` (
+  `DepositNo` int NOT NULL,
+  `TenureMonth` int NOT NULL,
+  `DateOfCreation` date NOT NULL,
+  `Amount` float NOT NULL,
+  `ROI` float NOT NULL,
+  PRIMARY KEY (`DepositNo`),
+  UNIQUE KEY `DepositNo_UNIQUE` (`DepositNo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fixeddeposits`
+--
+
+LOCK TABLES `fixeddeposits` WRITE;
+/*!40000 ALTER TABLE `fixeddeposits` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fixeddeposits` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `person`
 --
 
@@ -23,7 +76,7 @@ DROP TABLE IF EXISTS `person`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `person` (
-  `AadharNo` int unsigned NOT NULL,
+  `AadharNo` decimal(12,0) unsigned NOT NULL,
   `FirstName` varchar(45) NOT NULL,
   `LastName` varchar(45) DEFAULT NULL,
   `DOB` date NOT NULL,
@@ -56,10 +109,9 @@ DROP TABLE IF EXISTS `phonenumbers`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `phonenumbers` (
   `PhoneNumber` int NOT NULL,
-  `AadharNo` int unsigned NOT NULL,
+  `AadharNo` decimal(12,0) unsigned NOT NULL,
   PRIMARY KEY (`PhoneNumber`,`AadharNo`),
-  KEY `FK_Person_idx` (`AadharNo`),
-  CONSTRAINT `FK_Person` FOREIGN KEY (`AadharNo`) REFERENCES `person` (`AadharNo`)
+  KEY `FK_Person_idx` (`AadharNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -81,4 +133,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-26 22:29:12
+-- Dump completed on 2022-02-27  0:03:03
