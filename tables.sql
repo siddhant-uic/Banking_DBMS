@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 8.0.27)
 # Database: bankingSystem
-# Generation Time: 2022-02-26 18:59:57 +0000
+# Generation Time: 2022-02-27 06:57:39 +0000
 # ************************************************************
 
 
@@ -176,6 +176,20 @@ CREATE TABLE `fixeddeposits` (
 
 
 
+# Dump of table LoanAcc
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `LoanAcc`;
+
+CREATE TABLE `LoanAcc` (
+  `InterestRate` float NOT NULL,
+  `RepaymentDate` date NOT NULL,
+  `Account#` decimal(10,0) NOT NULL,
+  PRIMARY KEY (`Account#`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
 # Dump of table LoanRequests
 # ------------------------------------------------------------
 
@@ -247,6 +261,24 @@ CREATE TABLE `phonenumbers` (
   PRIMARY KEY (`PhoneNumber`,`AadharNo`),
   KEY `FK_Person_idx` (`AadharNo`),
   CONSTRAINT `FK_Person` FOREIGN KEY (`AadharNo`) REFERENCES `person` (`AadharNo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+# Dump of table Transactions
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Transactions`;
+
+CREATE TABLE `Transactions` (
+  `TransactionID` decimal(10,0) NOT NULL,
+  `Amount` decimal(15,2) NOT NULL,
+  `Status` varchar(1) DEFAULT NULL,
+  `Type` varchar(45) DEFAULT NULL,
+  `DateTime` datetime NOT NULL,
+  `CustID` decimal(6,0) NOT NULL,
+  `Account#` decimal(10,0) NOT NULL,
+  PRIMARY KEY (`TransactionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
