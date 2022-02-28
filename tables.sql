@@ -253,6 +253,7 @@ CREATE TABLE `manages` (
 
 DROP TABLE IF EXISTS `person`;
 
+
 CREATE TABLE `person` (
   `AadharNo` decimal(12,0) unsigned NOT NULL,
   `FirstName` varchar(45) NOT NULL,
