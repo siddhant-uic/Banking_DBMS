@@ -1,8 +1,7 @@
 -- Query 1 those who depository account but no loans
 SELECT CustID
 FROM accountopened
-WHERE custid NOT IN (SELECT DISTINCT custid 
-							FROM `loanrequests`)
+WHERE custid NOT IN (SELECT DISTINCT custid FROM `loanrequests`)
 							
 -- Query 2
 select AadharNo from person where age >30 and gender="M"
@@ -26,3 +25,13 @@ HAVING count(*) = 1
 SELECT p.firstname, p.lastname, cus.custid
 FROM person p, customer cus, cards c
 WHERE cus.custid NOT IN (SELECT )
+
+-- Select those users who are from the city where they work
+SELECT firstname, lastname, empid
+FROM person NATURAL JOIN employee
+WBERE empid IN (SELECT empid
+				FROM person p NATURAL JOIN employee e NATURAL JOIN employeeworks w NATURAL JOIN branch b
+				WHERE b.city = p.city)
+
+
+Mumbai	Delhi	Bangalore	Hyderabad	Ahmedabad	Chennai,	Kolkata
