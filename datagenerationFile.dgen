@@ -91,7 +91,7 @@
         <RowsToGenerate>0</RowsToGenerate>
         <PopulationDetails>
           <PopulationType>RowsCount</PopulationType>
-          <RowsCount>1000</RowsCount>
+          <RowsCount>7</RowsCount>
           <LookupProportion>30</LookupProportion>
           <ProportionOfExistingData>10</ProportionOfExistingData>
           <TimeTicksToPopulate>100000000</TimeTicksToPopulate>
@@ -281,11 +281,11 @@
             <Values>
               <WeightedListItem>
                 <Value xmlns:q6="http://www.w3.org/2001/XMLSchema" p6:type="q6:string">DEBIT</Value>
-                <Weight>25</Weight>
+                <Weight>1</Weight>
               </WeightedListItem>
               <WeightedListItem>
                 <Value xmlns:q7="http://www.w3.org/2001/XMLSchema" p6:type="q7:string">CREDIT</Value>
-                <Weight>15</Weight>
+                <Weight>0</Weight>
               </WeightedListItem>
             </Values>
           </GeneratorOptions>
@@ -723,7 +723,7 @@
             <ValueDistributionMode>Seed</ValueDistributionMode>
             <SeedValue>29</SeedValue>
             <MinValue>100000000000</MinValue>
-            <MaxValue>999999999999</MaxValue>
+            <MaxValue>500000000000</MaxValue>
             <UseDefault>false</UseDefault>
           </GeneratorOptions>
           <GeneratorType>MySqlUnsignedDecimalGenerator</GeneratorType>
@@ -1120,54 +1120,6 @@
           <GeneratorName>float unsigned</GeneratorName>
           <GeneratorDescription>fill with unsigned floating point numeric values</GeneratorDescription>
         </Column>
-        <Column Name="DOJ">
-          <Checked>true</Checked>
-          <DataType>DATE</DataType>
-          <GeneratorOptions p6:type="DateGeneratorOptions" xmlns:p6="http://www.w3.org/2001/XMLSchema-instance">
-            <AllowNulls>false</AllowNulls>
-            <NullProportion>0</NullProportion>
-            <Unique>false</Unique>
-            <IsAlwaysUnique>false</IsAlwaysUnique>
-            <UseDefault>false</UseDefault>
-            <ValueDistributionMode>Seed</ValueDistributionMode>
-            <SeedValue>20</SeedValue>
-            <SequentialValueTicks>864000000000</SequentialValueTicks>
-            <OffsetFromColumnMaxTimeTicks>10000000</OffsetFromColumnMaxTimeTicks>
-            <OffsetFromColumnMinTimeTicks>10000000</OffsetFromColumnMinTimeTicks>
-            <DateTimeRange>MinMaxDate</DateTimeRange>
-            <UseOffsetDetails>false</UseOffsetDetails>
-            <OffsetFromColumnMinDays>0</OffsetFromColumnMinDays>
-            <OffsetFromColumnMaxDays>7</OffsetFromColumnMaxDays>
-            <MinDate>1970-01-01T00:00:00</MinDate>
-            <MaxDate>2022-02-28T00:00:00+05:30</MaxDate>
-            <IsRandomizeDate>true</IsRandomizeDate>
-          </GeneratorOptions>
-          <GeneratorType>MySqlDateGenerator</GeneratorType>
-          <GeneratorName>date</GeneratorName>
-          <GeneratorDescription>fill with date values</GeneratorDescription>
-        </Column>
-        <Column Name="branchID">
-          <Checked>true</Checked>
-          <DataType>DECIMAL</DataType>
-          <GeneratorOptions p6:type="ForeignKeyGeneratorOptions" xmlns:p6="http://www.w3.org/2001/XMLSchema-instance">
-            <Unique>false</Unique>
-            <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>false</AllowNulls>
-            <NullProportion>0</NullProportion>
-            <ValueDistributionMode>Seed</ValueDistributionMode>
-            <SeedValue>20</SeedValue>
-            <RepeatValues>false</RepeatValues>
-            <FromTimes>1</FromTimes>
-            <ToTimes>10</ToTimes>
-            <ExcludeValues>false</ExcludeValues>
-            <ExclusionValuesPercent>1</ExclusionValuesPercent>
-          </GeneratorOptions>
-          <GeneratorType>ForeignKeyGenerator</GeneratorType>
-          <GeneratorName>Foreign Key (auto assigned)</GeneratorName>
-          <GeneratorDescription>references a column from parent table</GeneratorDescription>
-          <HasForeignKey>true</HasForeignKey>
-          <Precision>4</Precision>
-        </Column>
         <Column Name="AadharNo">
           <Checked>true</Checked>
           <DataType>DECIMAL</DataType>
@@ -1297,6 +1249,66 @@
           <GeneratorType>MySqlDateGenerator</GeneratorType>
           <GeneratorName>date</GeneratorName>
           <GeneratorDescription>fill with date values</GeneratorDescription>
+        </Column>
+      </Columns>
+    </Table>
+    <Table Name="creditcardrequests">
+      <Checked>true</Checked>
+      <Settings>
+        <Truncate>true</Truncate>
+        <RowsToGenerate>0</RowsToGenerate>
+        <PopulationDetails>
+          <PopulationType>RowsCount</PopulationType>
+          <RowsCount>1000</RowsCount>
+          <LookupProportion>30</LookupProportion>
+          <ProportionOfExistingData>10</ProportionOfExistingData>
+          <TimeTicksToPopulate>100000000</TimeTicksToPopulate>
+        </PopulationDetails>
+      </Settings>
+      <Columns>
+        <Column Name="card#">
+          <Checked>true</Checked>
+          <DataType>DECIMAL</DataType>
+          <GeneratorOptions p6:type="ForeignKeyGeneratorOptions" xmlns:p6="http://www.w3.org/2001/XMLSchema-instance">
+            <Unique>true</Unique>
+            <IsAlwaysUnique>false</IsAlwaysUnique>
+            <AllowNulls>false</AllowNulls>
+            <NullProportion>0</NullProportion>
+            <ValueDistributionMode>Seed</ValueDistributionMode>
+            <SeedValue>13</SeedValue>
+            <RepeatValues>false</RepeatValues>
+            <FromTimes>1</FromTimes>
+            <ToTimes>10</ToTimes>
+            <ExcludeValues>false</ExcludeValues>
+            <ExclusionValuesPercent>1</ExclusionValuesPercent>
+          </GeneratorOptions>
+          <GeneratorType>ForeignKeyGenerator</GeneratorType>
+          <GeneratorName>Foreign Key (auto assigned)</GeneratorName>
+          <GeneratorDescription>references a column from parent table</GeneratorDescription>
+          <HasForeignKey>true</HasForeignKey>
+          <Precision>16</Precision>
+        </Column>
+        <Column Name="CustId">
+          <Checked>true</Checked>
+          <DataType>DECIMAL</DataType>
+          <GeneratorOptions p6:type="ForeignKeyGeneratorOptions" xmlns:p6="http://www.w3.org/2001/XMLSchema-instance">
+            <Unique>true</Unique>
+            <IsAlwaysUnique>false</IsAlwaysUnique>
+            <AllowNulls>false</AllowNulls>
+            <NullProportion>0</NullProportion>
+            <ValueDistributionMode>Seed</ValueDistributionMode>
+            <SeedValue>14</SeedValue>
+            <RepeatValues>false</RepeatValues>
+            <FromTimes>1</FromTimes>
+            <ToTimes>10</ToTimes>
+            <ExcludeValues>false</ExcludeValues>
+            <ExclusionValuesPercent>1</ExclusionValuesPercent>
+          </GeneratorOptions>
+          <GeneratorType>ForeignKeyGenerator</GeneratorType>
+          <GeneratorName>Foreign Key (auto assigned)</GeneratorName>
+          <GeneratorDescription>references a column from parent table</GeneratorDescription>
+          <HasForeignKey>true</HasForeignKey>
+          <Precision>6</Precision>
         </Column>
       </Columns>
     </Table>
@@ -1472,6 +1484,92 @@
           <GeneratorDescription>references a column from parent table</GeneratorDescription>
           <HasForeignKey>true</HasForeignKey>
           <Precision>16</Precision>
+        </Column>
+      </Columns>
+    </Table>
+    <Table Name="employeeworks">
+      <Checked>true</Checked>
+      <Settings>
+        <Truncate>true</Truncate>
+        <RowsToGenerate>0</RowsToGenerate>
+        <PopulationDetails>
+          <PopulationType>RowsCount</PopulationType>
+          <RowsCount>50</RowsCount>
+          <LookupProportion>30</LookupProportion>
+          <ProportionOfExistingData>10</ProportionOfExistingData>
+          <TimeTicksToPopulate>100000000</TimeTicksToPopulate>
+        </PopulationDetails>
+      </Settings>
+      <Columns>
+        <Column Name="empID">
+          <Checked>true</Checked>
+          <DataType>DECIMAL</DataType>
+          <GeneratorOptions p6:type="ForeignKeyGeneratorOptions" xmlns:p6="http://www.w3.org/2001/XMLSchema-instance">
+            <Unique>false</Unique>
+            <IsAlwaysUnique>false</IsAlwaysUnique>
+            <AllowNulls>false</AllowNulls>
+            <NullProportion>0</NullProportion>
+            <ValueDistributionMode>Seed</ValueDistributionMode>
+            <SeedValue>22</SeedValue>
+            <RepeatValues>true</RepeatValues>
+            <FromTimes>1</FromTimes>
+            <ToTimes>3</ToTimes>
+            <ExcludeValues>false</ExcludeValues>
+            <ExclusionValuesPercent>1</ExclusionValuesPercent>
+          </GeneratorOptions>
+          <GeneratorType>ForeignKeyGenerator</GeneratorType>
+          <GeneratorName>Foreign Key (auto assigned)</GeneratorName>
+          <GeneratorDescription>references a column from parent table</GeneratorDescription>
+          <HasForeignKey>true</HasForeignKey>
+          <Precision>6</Precision>
+        </Column>
+        <Column Name="branchID">
+          <Checked>true</Checked>
+          <DataType>DECIMAL</DataType>
+          <GeneratorOptions p6:type="ForeignKeyGeneratorOptions" xmlns:p6="http://www.w3.org/2001/XMLSchema-instance">
+            <Unique>false</Unique>
+            <IsAlwaysUnique>false</IsAlwaysUnique>
+            <AllowNulls>false</AllowNulls>
+            <NullProportion>0</NullProportion>
+            <ValueDistributionMode>Seed</ValueDistributionMode>
+            <SeedValue>24</SeedValue>
+            <RepeatValues>true</RepeatValues>
+            <FromTimes>1</FromTimes>
+            <ToTimes>8</ToTimes>
+            <ExcludeValues>false</ExcludeValues>
+            <ExclusionValuesPercent>1</ExclusionValuesPercent>
+          </GeneratorOptions>
+          <GeneratorType>ForeignKeyGenerator</GeneratorType>
+          <GeneratorName>Foreign Key (auto assigned)</GeneratorName>
+          <GeneratorDescription>references a column from parent table</GeneratorDescription>
+          <HasForeignKey>true</HasForeignKey>
+          <Precision>4</Precision>
+        </Column>
+        <Column Name="DOJ">
+          <Checked>true</Checked>
+          <DataType>DATE</DataType>
+          <GeneratorOptions p6:type="DateGeneratorOptions" xmlns:p6="http://www.w3.org/2001/XMLSchema-instance">
+            <AllowNulls>false</AllowNulls>
+            <NullProportion>0</NullProportion>
+            <Unique>true</Unique>
+            <IsAlwaysUnique>false</IsAlwaysUnique>
+            <UseDefault>false</UseDefault>
+            <ValueDistributionMode>Seed</ValueDistributionMode>
+            <SeedValue>22</SeedValue>
+            <SequentialValueTicks>864000000000</SequentialValueTicks>
+            <OffsetFromColumnMaxTimeTicks>10000000</OffsetFromColumnMaxTimeTicks>
+            <OffsetFromColumnMinTimeTicks>10000000</OffsetFromColumnMinTimeTicks>
+            <DateTimeRange>MinMaxDate</DateTimeRange>
+            <UseOffsetDetails>false</UseOffsetDetails>
+            <OffsetFromColumnMinDays>0</OffsetFromColumnMinDays>
+            <OffsetFromColumnMaxDays>7</OffsetFromColumnMaxDays>
+            <MinDate>1991-01-01T00:00:00</MinDate>
+            <MaxDate>2022-03-02T00:00:00+05:30</MaxDate>
+            <IsRandomizeDate>true</IsRandomizeDate>
+          </GeneratorOptions>
+          <GeneratorType>MySqlDateGenerator</GeneratorType>
+          <GeneratorName>date</GeneratorName>
+          <GeneratorDescription>fill with date values</GeneratorDescription>
         </Column>
       </Columns>
     </Table>
@@ -2289,7 +2387,7 @@
   </Tables>
   <SynchronizationOptions p2:type="DataSyncOptionGroup" xmlns:p2="http://www.w3.org/2001/XMLSchema-instance">
     <SynchronizeType>File</SynchronizeType>
-    <SynchronizationFileName>D:\Programming and stuff\Study material\4th sem\DBMS\Project\Banking_DBMS\FINAL.sql</SynchronizationFileName>
+    <SynchronizationFileName>D:\Programming and stuff\Study material\4th sem\DBMS\Project\Banking_DBMS\dataOnly.sql</SynchronizationFileName>
     <BulkInsert>false</BulkInsert>
   </SynchronizationOptions>
 </DataGenDocument>

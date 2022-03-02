@@ -5,7 +5,7 @@ WHERE custid NOT IN (SELECT DISTINCT custid
 							FROM `loanrequests`)
 							
 -- Query 2
-select pid from person where age >30 and gender="M"
+select AadharNo from person where age >30 and gender="M"
 
 -- query 3 customers with both fixed deposit and credit card
 SELECT p.firstname, p.lastname , c.custid
@@ -19,7 +19,7 @@ WHERE c.custid in (
 SELECT custid 
 From transactions
 GROUP BY custid
-HAVING count(*) > 2
+HAVING count(*) = 1
 ) and p.aadharno = c.aadharno;
 
 -- Query 5 exactly one debit and one credit
