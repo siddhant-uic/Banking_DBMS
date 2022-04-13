@@ -1,0 +1,10 @@
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/CMakeFiles/INSTALL.dir
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/CMakeFiles/ALL_BUILD.dir
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/CMakeFiles/ZERO_CHECK.dir
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/flutter/CMakeFiles/flutter_wrapper_plugin.dir
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/flutter/CMakeFiles/flutter_wrapper_app.dir
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/flutter/CMakeFiles/flutter_assemble.dir
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/flutter/CMakeFiles/INSTALL.dir
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/runner/CMakeFiles/banking_app.dir
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/runner/CMakeFiles/INSTALL.dir
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/runner/CMakeFiles/ALL_BUILD.dir

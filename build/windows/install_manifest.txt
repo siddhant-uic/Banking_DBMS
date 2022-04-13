@@ -1,0 +1,8 @@
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/runner/Debug/data/icudtl.dat
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/runner/Debug/flutter_windows.dll
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/runner/Debug/data/flutter_assets/AssetManifest.json
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/runner/Debug/data/flutter_assets/FontManifest.json
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/runner/Debug/data/flutter_assets/fonts/MaterialIcons-Regular.otf
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/runner/Debug/data/flutter_assets/kernel_blob.bin
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/runner/Debug/data/flutter_assets/NOTICES.Z
+D:/Programming and stuff/Study material/4th sem/DBMS/Project/Banking_DBMS/build/windows/runner/Debug/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf

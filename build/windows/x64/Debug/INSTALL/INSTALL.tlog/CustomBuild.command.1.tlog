@@ -1,0 +1,10 @@
+^D:\PROGRAMMING AND STUFF\STUDY MATERIAL\4TH SEM\DBMS\PROJECT\BANKING_DBMS\BUILD\WINDOWS\CMAKEFILES\E03F75698FAC8CC1A2661A33FDD82CED\INSTALL_FORCE.RULE
+setlocal
+cd .
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
