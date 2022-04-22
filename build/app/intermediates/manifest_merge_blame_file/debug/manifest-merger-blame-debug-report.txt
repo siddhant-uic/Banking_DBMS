@@ -12,8 +12,8 @@
 12         to allow setting breakpoints, to provide hot reload, etc.
 13    -->
 14    <uses-permission android:name="android.permission.INTERNET" />
-14-->D:\Programming and stuff\Study material\4th sem\DBMS\Project\Banking_DBMS\android\app\src\debug\AndroidManifest.xml:6:5-66
-14-->D:\Programming and stuff\Study material\4th sem\DBMS\Project\Banking_DBMS\android\app\src\debug\AndroidManifest.xml:6:22-64
+14-->D:\Programming and stuff\Study material\4th sem\DBMS\Project\Banking_DBMS\android\app\src\main\AndroidManifest.xml:3:5-67
+14-->D:\Programming and stuff\Study material\4th sem\DBMS\Project\Banking_DBMS\android\app\src\main\AndroidManifest.xml:3:22-64
 15
 16    <application
 17        android:name="android.app.Application"
