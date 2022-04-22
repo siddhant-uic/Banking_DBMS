@@ -4,6 +4,7 @@ const port = 3000;
 const customersRouter = require("./routes/customers");
 const accountsRouter = require("./routes/accounts");
 const personRouter = require("./routes/person");
+const FDsRouter = require("./routes/FD");
 
 app.use(express.json());
 app.use(
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 app.use("/customers", customersRouter);
 app.use("/accounts", accountsRouter);
 app.use("/person", personRouter);
+app.use("/FD", FDsRouter);
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);

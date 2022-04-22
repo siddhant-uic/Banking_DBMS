@@ -4,7 +4,7 @@ const person = require("../services/person");
 
 router.get("/", async (req, res) => {
     try {
-        const personData = await person.getAllPerson();
+        const personData = await person.getAllPersons();
         res.json(personData.data);
     } catch (error) {
         console.log(error);
@@ -21,3 +21,5 @@ router.get("/:personId", async (req, res) => {
         res.json(error);
     }
 });
+
+module.exports = router;

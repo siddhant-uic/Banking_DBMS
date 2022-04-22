@@ -22,5 +22,14 @@ router.get("/:customerId", async (req, res) => {
         res.json(error);
     }
 });
+router.get("/login/:customerId/:password", async (req, res) => {
+    try {
+        const customerLogin = await customers.loginCustomer(req.params.customerId, req.params.password);
+        res.json(customerLogin.data);
+    } catch (error) {
+        console.log(error);
+        res.json(error);
+    }
+});
 
 module.exports = router;

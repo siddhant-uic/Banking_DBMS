@@ -23,3 +23,7 @@ async function getPersonById(aadharNo){
     }
 }
 
+module.exports = {
+  getAllPersons,
+  getPersonById
+}
