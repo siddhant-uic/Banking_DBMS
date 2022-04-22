@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=D:\Download\flutter_windows_2.0.6-stable\flutter"
-export "FLUTTER_APPLICATION_PATH=D:\Banking_DBMS"
+export "FLUTTER_ROOT=D:\flutter"
+export "FLUTTER_APPLICATION_PATH=D:\Programming and stuff\Study material\4th sem\DBMS\Project\Banking_DBMS"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib\main.dart"
 export "FLUTTER_BUILD_DIR=build"
