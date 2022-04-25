@@ -13,6 +13,18 @@ async function getTransactionsByCustomerId(customerId) {
     }
 }
 
+async function getTransactionsByAccountNumber(accountNumber) {
+    const rows = await db.runQuery(
+      `SELECT * FROM transactions where \`Account#\` = ${accountNumber}`
+    );
+    const data = helper.emptyOrRows(rows);
+
+    return {
+        data,
+    }
+}
+
 module.exports = {
-    getTransactionsByCustomerId
+    getTransactionsByCustomerId,
+    getTransactionsByAccountNumber,
 }

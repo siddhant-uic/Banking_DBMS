@@ -33,4 +33,25 @@ router.get("/login/:customerId/:password", async (req, res) => {
     }
 });
 
+router.get("/assets/:customerId", async (req, res) => {
+    try {
+        const customerById = await customers.getAssetsByCustId(req.params.customerId);
+        res.json(customerById.data);
+    } catch (error) {
+        console.log(error);
+        res.json(error);
+    }
+});
+
+router.get("/liabilities/:customerId", async (req, res) => {
+    try {
+        const customerById = await customers.getLiabilitiesByCustId(req.params.customerId);
+        res.json(customerById.data);
+    } catch (error) {
+        console.log(error);
+        res.json(error);
+    }
+});
+
+
 module.exports = router;

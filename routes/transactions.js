@@ -12,4 +12,14 @@ router.get("/:customerId", async (req, res) => {
     }
 });
 
+router.get("/:accountNumber", async (req, res) => {
+    try {
+        const transactionsByAccountNumber = await transactions.getTransactionsByAccountNumber(req.params.accountNumber);
+        res.json(transactionsByAccountNumber.data);
+    } catch (error) {
+        console.log(error);
+        res.json(error);
+    }
+});
+
 module.exports = router;

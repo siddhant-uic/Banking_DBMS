@@ -43,8 +43,32 @@ async function loginCustomer(customerId, password) {
   }
 }
 
+async function getAssetsByCustId(customerId) {
+  const rows = await db.runQuery(
+    `SELECT (SELECT sum(balance) FROM account NATURAL JOIN accountopened WHERE balance > 0 GROUP BY custid HAVING custid = ${customerId}) + (SELECT sum(amount) FROM fixeddeposits GROUP BY custid HAVING custid = ${customerId}) as total_amount`
+  );
+  const data = helper.emptyOrRows(rows);
+
+  return {
+    data,
+  }
+}
+
+async function getLiabilitiesByCustId(customerId) {
+  const rows = await db.runQuery(
+    `SELECT sum(balance) as liabilities FROM account NATURAL JOIN accountopened WHERE balance > 0 GROUP BY custid HAVING custid = ${customerId}`
+  );
+  const data = helper.emptyOrRows(rows);
+
+  return {
+    data,
+  }
+}
+
 module.exports = {
   getAllCustomers,
   getCustomerById,
   loginCustomer,
+  getAssetsByCustId,
+  getLiabilitiesByCustId,
 }
