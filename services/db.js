@@ -10,8 +10,10 @@ async function runQuery(sql) {
     return new Promise((resolve, reject) => {
         connection.query(sql, (err, results) => {
             if (err) {
+                connection.end();
                 reject(err);
             } else {
+                connection.end();
                 resolve(results);
             }
         });

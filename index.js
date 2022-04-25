@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require('cors')
 const port = 3000;
 const customersRouter = require("./routes/customers");
 const accountsRouter = require("./routes/accounts");
@@ -7,6 +8,7 @@ const personRouter = require("./routes/person");
 const FDsRouter = require("./routes/FD");
 
 app.use(express.json());
+app.use(cors());
 app.use(
     express.urlencoded({
         extended: true,
