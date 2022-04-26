@@ -1,5 +1,5 @@
-const db = require('./db');
-const helper = require('../helper');
+const db = require("./db");
+const helper = require("../helper");
 
 async function getAllManagers() {
   const rows = await db.runQuery(
@@ -13,54 +13,47 @@ async function getAllManagers() {
 
   return {
     data,
-  }
+  };
 }
 
 async function loginEmployee(empId, password) {
   const rows = await db.runQuery(
-    `SELECT * FROM EMPLOYEE NATURAL JOIN (SELECT e1.* FROM employeeworks e1 LEFT OUTER JOIN employeeworks e2 ON (e1.empid = e2.empid AND e1.doj < e2.doj) WHERE e2.empid IS NULL) as curr_branch WHERE empid = ${empId}}`
+    `select * from employee natural join (SELECT e1.* FROM employeeworks e1 LEFT OUTER JOIN employeeworks e2 ON (e1.empid = e2.empid AND e1.doj < e2.doj) WHERE e2.empid IS NULL) as curr_branch where empId = ${empId}`
   );
   const data = helper.emptyOrRows(rows);
   if (data.length === 0) {
     return {
       data: "Employee not found",
-    }
+    };
   }
   if (data[0].password === password) {
     return {
       data,
-    }
+    };
   } else {
     return {
       data: "Login Failed",
-    }
+    };
   }
 }
 
 async function getManagersByEid(eid) {
-    const rows = await db.runQuery(
-      `SELECT m1.*
+  const rows = await db.runQuery(
+    `SELECT m1.*
       FROM manages m1
         LEFT OUTER JOIN manages m2
           ON (m1.branchid = m2.branchid AND m1.doj < m2.doj)
       WHERE m2.branchid IS NULL AND m1.empid = ${eid}`
-    );
-    const data = helper.emptyOrRows(rows);
-  
-    return {
-      data,
-    }
+  );
+  const data = helper.emptyOrRows(rows);
+
+  return {
+    data,
+  };
 }
-
-
-
-
-
-
-
 
 module.exports = {
-    loginEmployee,
-    getAllManagers,
-    getManagersByEid,
-}
+  loginEmployee,
+  getAllManagers,
+  getManagersByEid,
+};
