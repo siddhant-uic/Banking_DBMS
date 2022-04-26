@@ -25,4 +25,14 @@ router.get("/:accountNumber", async (req, res) => {
     }
 });
 
+router.post("/create", urlencodedParser, async (req, res) => {
+    try {
+        const createTransaction = await transactions.createTransaction(req.body.customerId, req.body.accountNumber, req.body.amount, req.body.transactionType);
+        res.json(createTransaction.data);
+    } catch (error) {
+        console.log(error);
+        res.json(error);
+    }
+});
+
 module.exports = router;

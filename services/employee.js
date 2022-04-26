@@ -26,7 +26,7 @@ async function loginEmployee(empId, password) {
       data: "Employee not found",
     }
   }
-  if (data[0].Password == password) {
+  if (data[0].password === password) {
     return {
       data,
     }
