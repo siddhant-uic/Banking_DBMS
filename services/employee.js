@@ -18,7 +18,7 @@ async function getAllManagers() {
 
 async function loginEmployee(empId, password) {
   const rows = await db.runQuery(
-    `select * from employee where empId = ${empId}`
+    `SELECT * FROM EMPLOYEE NATURAL JOIN (SELECT e1.* FROM employeeworks e1 LEFT OUTER JOIN employeeworks e2 ON (e1.empid = e2.empid AND e1.doj < e2.doj) WHERE e2.empid IS NULL) as curr_branch WHERE empid = ${empId}}`
   );
   const data = helper.emptyOrRows(rows);
   if (data.length === 0) {
