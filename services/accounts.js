@@ -23,6 +23,17 @@ async function getAccountsByCustomerId(customerId) {
   }
 }
 
+async function getAccountsByBranchId(branchId) {
+  const rows = await db.runQuery(
+    `SELECT * from account NATURAL JOIN accountopened WHERE branchid = ${branchId}`
+  );
+  const data = helper.emptyOrRows(rows);
+
+  return {
+    data,
+  }
+}
+
 async function getAccountDetailsByAccountNumber(accountNumber) {
   const rows = await db.runQuery(
     `select * from depositoryacc where \`Account#\` = ${accountNumber}`
@@ -63,4 +74,5 @@ module.exports = {
   getAccountsByCustomerId,
   getAccountDetailsByAccountNumber,
   getDebitCardByNumber,
+  getAccountsByBranchId,
 }

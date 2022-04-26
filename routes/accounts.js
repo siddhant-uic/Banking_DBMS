@@ -22,6 +22,16 @@ router.get("/:customerId", async (req, res) => {
     }
 });
 
+router.get("/branch/:branchId", async (req, res) => {
+    try {
+        const accountsByBranchId = await accounts.getAccountsByBranchId(req.params.branchId);
+        res.json(accountsByBranchId.data);
+    } catch (error) {
+        console.log(error);
+        res.json(error);
+    }
+});
+
 router.get("/details/:accountNumber", async (req, res) => {
     try {
         const accountDetailsByAccountNumber = await accounts.getAccountDetailsByAccountNumber(req.params.accountNumber);

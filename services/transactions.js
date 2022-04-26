@@ -23,6 +23,9 @@ async function getTransactionsByAccountNumber(accountNumber) {
     }
 }
 
+
+ 
+
 module.exports = {
     getTransactionsByCustomerId,
     getTransactionsByAccountNumber,

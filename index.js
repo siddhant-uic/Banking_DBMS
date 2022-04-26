@@ -7,6 +7,8 @@ const accountsRouter = require("./routes/accounts");
 const personRouter = require("./routes/person");
 const FDsRouter = require("./routes/FD");
 const transactionsRouter = require("./routes/transactions");
+const employeeRouter = require("./routes/employee");
+
 app.use(express.json());
 app.use(cors());
 app.use(
@@ -26,6 +28,7 @@ app.use("/accounts", accountsRouter);
 app.use("/person", personRouter);
 app.use("/FD", FDsRouter);
 app.use("/transactions", transactionsRouter);
+app.use("/employee", employeeRouter);
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);

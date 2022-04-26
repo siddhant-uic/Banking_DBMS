@@ -3,8 +3,8 @@ const config = {
         /* don't expose password or any sensitive info, done only for demo */
         host: "localhost",
         user: "root",
-        password: "yuvrajsingh42",
-        database: "bankingsystem",
+        password: "",
+        database: "bank",
     },
 };
 module.exports = config;

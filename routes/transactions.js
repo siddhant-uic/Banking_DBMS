@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const transactions = require("../services/transactions");
 
+var bodyParser = require('body-parser'); 
+var urlencodedParser = bodyParser.urlencoded({ extended: false })  
+
 router.get("/:customerId", async (req, res) => {
     try {
         const transactionsByCustomerId = await transactions.getTransactionsByCustomerId(req.params.customerId);
