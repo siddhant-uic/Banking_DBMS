@@ -12,6 +12,32 @@ async function getLoansByBid(branchId) {
   };
 }
 
+async function rejectLoan(requestID) {
+    console.log(transactionIdNumber);
+    const rows = await db.runQuery(
+      `UPDATE loanrequests SET status = 'F' WHERE requestid = ${requestID};`
+    );
+    const data = helper.emptyOrRows(rows);
+
+    return {
+        data,
+    }
+}
+
+async function grantLoan(requestID) {
+    console.log(transactionIdNumber);
+    const rows = await db.runQuery(
+      `UPDATE loanrequests SET status = 'C' WHERE requestid = ${requestID};`
+    );
+    const data = helper.emptyOrRows(rows);
+
+    return {
+        data,
+    }
+}
+
 module.exports = {
     getLoansByBid,
+    rejectLoan,
+    grantLoan,
 };
