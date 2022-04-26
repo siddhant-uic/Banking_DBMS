@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const employee = require("../services/employee");
 
-router.get("/", async (req, res) => {
+router.get("/managers", async (req, res) => {
     try {
         const managerData = await employee.getAllManagers();
         res.json(managerData.data);
@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.get("/:empID", async (req, res) => {
+router.get("/manager/:empID", async (req, res) => {
     try {
         const managerById = await employee.getManagersByEid(req.params.empID);
         res.json(managerById.data);

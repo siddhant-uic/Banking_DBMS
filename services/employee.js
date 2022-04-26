@@ -3,11 +3,7 @@ const helper = require("../helper");
 
 async function getAllManagers() {
   const rows = await db.runQuery(
-    `SELECT m1.*
-    FROM employeeworks e1
-      LEFT OUTER JOIN employeeworks e2
-        ON (e1.branchid = e2.branchid AND e1.doj < e2.doj)
-    WHERE e2.branchid IS NULL`
+    `select m1.* FROM manages m1 LEFT OUTER JOIN manages m2 ON (m1.branchid = m2.branchid AND m1.doj < m2.doj) WHERE m2.branchid IS NULL;`
   );
   const data = helper.emptyOrRows(rows);
 
@@ -15,6 +11,8 @@ async function getAllManagers() {
     data,
   };
 }
+
+
 
 async function loginEmployee(empId, password) {
   const rows = await db.runQuery(
@@ -38,6 +36,21 @@ async function loginEmployee(empId, password) {
 }
 
 async function getManagersByEid(eid) {
+  const rows = await db.runQuery(
+    `SELECT m1.*
+      FROM manages m1
+        LEFT OUTER JOIN manages m2
+          ON (m1.branchid = m2.branchid AND m1.doj < m2.doj)
+      WHERE m2.branchid IS NULL AND m1.empid = ${eid}`
+  );
+  const data = helper.emptyOrRows(rows);
+
+  return {
+    data,
+  };
+}
+
+async function getLoansByBid(eid) {
   const rows = await db.runQuery(
     `SELECT m1.*
       FROM manages m1
