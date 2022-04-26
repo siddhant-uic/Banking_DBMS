@@ -13,7 +13,7 @@ async function getLoansByBid(branchId) {
 }
 
 async function rejectLoan(requestID) {
-    console.log(transactionIdNumber);
+    console.log(requestID);
     const rows = await db.runQuery(
       `UPDATE loanrequests SET status = 'F' WHERE requestid = ${requestID};`
     );
@@ -25,7 +25,7 @@ async function rejectLoan(requestID) {
 }
 
 async function grantLoan(requestID) {
-    console.log(transactionIdNumber);
+    console.log(requestID);
     const rows = await db.runQuery(
       `UPDATE loanrequests SET status = 'C' WHERE requestid = ${requestID};`
     );
