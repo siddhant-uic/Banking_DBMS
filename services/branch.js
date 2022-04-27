@@ -12,6 +12,17 @@ async function getLoansByBid(branchId) {
   };
 }
 
+async function getFDsByBid(branchId) {
+  const rows = await db.runQuery(
+    `SELECT * from fixeddeposit`
+  );
+  const data = helper.emptyOrRows(rows);
+
+  return {
+    data,
+  };
+}
+
 async function rejectLoan(requestID) {
     console.log(requestID);
     const rows = await db.runQuery(
@@ -24,7 +35,7 @@ async function rejectLoan(requestID) {
     }
 }
 
-async function grantLoan(requestID) {
+async function approveLoan(requestID) {
     console.log(requestID);
     const rows = await db.runQuery(
       `UPDATE loanrequests SET status = 'C' WHERE requestid = ${requestID};`
@@ -39,5 +50,6 @@ async function grantLoan(requestID) {
 module.exports = {
     getLoansByBid,
     rejectLoan,
-    grantLoan,
+    approveLoan,
+    getFDsByBid,
 };
