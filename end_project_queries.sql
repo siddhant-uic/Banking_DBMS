@@ -96,3 +96,13 @@ SELECT d.`Account#`, a.balance
 FROM depositoryacc d, account a WHERE d.`Account#` = a.`Account#`
 AND d.`DebitCard#` NOT IN (SELECT c.cardno FROM cards c 
 WHERE  DATEDIFF(CURDATE(), c.IssueDate) - (c.term_months*30)  < 0);
+
+
+-- count number of people with name from A and they are both customers as well as employees
+
+-- number of customers with credit score in blah blah who do not have a credit card
+SELECT COUNT(*) as Potential_CreditCards
+FROM customer c
+WHERE c.`Credit Score` BETWEEN 550 AND 750 
+AND c.custid NOT IN (SELECT DISTINCT custid 
+					 FROM creditcardrequests);
