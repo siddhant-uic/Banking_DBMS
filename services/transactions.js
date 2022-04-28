@@ -3,7 +3,7 @@ const helper = require('../helper');
 
 async function getTransactionsByCustomerId(customerId) {
     const rows = await db.runQuery(
-      `SELECT * FROM transactions where custid = ${customerId}`
+        `SELECT * FROM transactions where custid = ${customerId}`
     );
     const data = helper.emptyOrRows(rows);
 
@@ -14,7 +14,7 @@ async function getTransactionsByCustomerId(customerId) {
 
 async function getTransactionsByAccountNumber(accountNumber) {
     const rows = await db.runQuery(
-      `SELECT * FROM transactions where \`Account#\` = ${accountNumber}`
+        `SELECT * FROM transactions where \`Account#\` = ${accountNumber}`
     );
     const data = helper.emptyOrRows(rows);
 
@@ -25,16 +25,16 @@ async function getTransactionsByAccountNumber(accountNumber) {
 
 async function createTransaction(customerId, accountNumber, amount, transactionType) {
     const transactionId = await db.runQuery(
-        `Select transactionid from transactions`
+        `Select transactionid from transactions order by transactionid`
     );
-    var transactionIdNumber;
-    while (transactionId.contains(transactionIdNumber)) {
-        transactionIdNumber = transactionId[0].transactionid + 1;   
-    }
+    var transactionIdNumber = transactionId[transactionId.length - 1].transactionid + 1;
+
     console.log(transactionIdNumber);
-    const DateTime = new Date.now();
+    const DateTime = new Date();
+    var date = DateTime.toISOString().split('T')[0];
+    // console.log(date);
     const rows = await db.runQuery(
-      `INSERT INTO transactions (transactionid , custid, \`Account#\`, amount, transactiontype, datetime) VALUES (${transactionIdNumber}, ${customerId}, ${accountNumber}, ${amount}, '${transactionType}, ${DateTime}')`
+        `INSERT INTO transactions (transactionid , custid, \`Account#\`, amount, type, datetime, status) VALUES (${transactionIdNumber}, ${customerId}, ${accountNumber}, ${amount}, "${transactionType}", "${date}", "P")`
     );
     const data = helper.emptyOrRows(rows);
 
@@ -42,7 +42,7 @@ async function createTransaction(customerId, accountNumber, amount, transactionT
         data,
     }
 }
- 
+
 
 module.exports = {
     getTransactionsByCustomerId,

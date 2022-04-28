@@ -46,4 +46,14 @@ router.post("/approve", urlencodedParser, async (req, res) => {
     }
 });
 
+router.get("/all", async (req, res) => {
+    try {
+        const allBranches = await branch.getAllBranches();
+        res.json(allBranches.data);
+    } catch (error) {
+        console.log(error);
+        res.json(error);
+    }
+});
+
 module.exports = router;

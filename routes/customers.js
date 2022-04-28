@@ -2,6 +2,11 @@ const express = require("express");
 const router = express.Router();
 const customers = require("../services/customers");
 
+var bodyParser = require('body-parser');
+var urlencodedParser = bodyParser.urlencoded({
+    extended: false
+})
+
 router.get("/", async (req, res) => {
     // console.log(req);
     try {
@@ -37,6 +42,16 @@ router.get("/totals/:customerId", async (req, res) => {
     try {
         const totalById = await customers.getTotalsByCustId(req.params.customerId);
         res.json(totalById.data);
+    } catch (error) {
+        console.log(error);
+        res.json(error);
+    }
+});
+
+router.post("/requestLoan", urlencodedParser, async (req, res) => {
+    try {
+        const requestLoan = await customers.requestLoan(req.body.customerId, req.body.durationMonths, req.body.amount, req.body.loanType, req.body.branchId);
+        res.json(requestLoan.data);
     } catch (error) {
         console.log(error);
         res.json(error);

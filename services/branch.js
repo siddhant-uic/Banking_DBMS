@@ -47,9 +47,21 @@ async function approveLoan(requestID) {
     }
 }
 
+async function getAllBranches() {
+  const rows = await db.runQuery(
+    `SELECT branchId from branch`
+  );
+  const data = helper.emptyOrRows(rows);
+
+  return {
+    data,
+  };
+}
+
 module.exports = {
     getLoansByBid,
     rejectLoan,
     approveLoan,
     getFDsByBid,
+    getAllBranches,
 };
