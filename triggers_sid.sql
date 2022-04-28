@@ -89,10 +89,6 @@ IF ( new.`Status`="P")
 	WHERE account.`Account#` = new.`Account#`;
     END IF;
 END IF;
-update transactions
-set transactions.`Status` = 'C'
-where transactions.`Account#` = new.`Account#`
-ORDER BY transactions.datetime desc limit 1;
 END
 $$
 
@@ -129,6 +125,19 @@ BEGIN
 	END IF;
 END;
 $$
+
+
+DELIMETER $$
+CREATE TRIGGER 'CreditCardAllow'
+AFTER INSERT ON creditcardrequests FOR EACH ROW
+BEGIN
+    IF (customer)
+END
+$$
+
+DELIMTER $$
+CREATE TRIGGER `DeductTransactionCost`
+
 
 DELIMITER $$
 CREATE TRIGGER `LoanRepayementComplete` 
