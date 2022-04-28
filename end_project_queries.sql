@@ -1,11 +1,10 @@
 -- Updating interest rate for home loans only
 -- changed column name to avoid error
-UPDATE loanacc 
-SET InterestRate = InterestRate + 1
-WHERE Account IN (SELECT Acc
-					FROM loanrequests
-                    WHERE Type = "HOME")
-;
+UPDATE loanacc l
+SET InterestRate = InterestRate - 1
+WHERE l.`Account#` IN (SELECT loanrequests.`Account#` 
+						FROM loanrequests 
+						WHERE loanrequests.type = 'HOME');
 
 -- Delete accounts who have not done any transactions in the last 10 years
 -- have to see if this always deletes all loan accounts or we should add some constraint for loan account
