@@ -11,10 +11,19 @@ WHERE Account IN (SELECT Acc
 -- have to see if this always deletes all loan accounts or we should add some constraint for loan account
 DELETE 
 FROM account
-WHERE `account#` NOT IN (SELECT DISTINCT `account#`
+WHERE `account#` NOT IN ((SELECT DISTINCT `account#`
                         FROM transactions
                         WHERE DATEDIFF(CURDATE(), datetime) < 3653
-                        );
+                        ) OR (SELECT account# FROM loanacc))
+                        ;
+
+-- updated
+DELETE 
+FROM account
+WHERE `account#` NOT IN ((SELECT DISTINCT `account#`
+                        FROM transactions
+                        WHERE DATEDIFF(CURDATE(), datetime) < 3653
+                        ) UNION (SELECT `account#` FROM loanacc));            
 
 
 -- Combine assets of everyone in bank
