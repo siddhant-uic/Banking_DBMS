@@ -1,5 +1,6 @@
 // import 'package:email_validator/email_validator.dart';
 import 'package:banking_app/Dashboard.dart';
+import 'package:banking_app/EmployeeDashboard.dart';
 import 'package:banking_app/services/api.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final List<String> textFieldsValue = ["", ""];
   var rememberValue = false;
+  String type = "Customer";
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +33,9 @@ class _LoginPageState extends State<LoginPage> {
             const Text(
               'Sign in',
               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 40,
-              ),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40,
+                  color: Colors.white),
             ),
             const SizedBox(
               height: 60,
@@ -83,16 +85,60 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 20,
                   ),
+                  DropdownButton<String>(
+                    value: type,
+                    icon: const Icon(
+                      Icons.arrow_downward,
+                      color: Colors.cyan,
+                    ),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.white),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.cyan,
+                    ),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        // dropdownValue = newValue!;
+                        type = newValue!;
+                      });
+                    },
+                    dropdownColor: Colors.blueGrey[700],
+                    items: <String>['Customer', 'Employee']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         print(_formKey.currentState);
                         try {
-                          Customer customer = await loginCustomer(
-                              textFieldsValue[0], textFieldsValue[1]);
-                          Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) => DashboardScreen(customer: customer),
-                          ));
+                          if (type == "Customer") {
+                            await loginCustomer(
+                                textFieldsValue[0], textFieldsValue[1]);
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DashboardScreen(),
+                              ),
+                            );
+                          } else {
+                            await loginEmployee(
+                                textFieldsValue[0], textFieldsValue[1]);
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EmployeeDashboardScreen(),
+                              ),
+                            );
+                          }
                         } catch (e) {
                           print(e);
                         }

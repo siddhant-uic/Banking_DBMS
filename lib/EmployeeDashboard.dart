@@ -5,7 +5,6 @@ import 'package:banking_app/Accounts.dart';
 import 'package:banking_app/FixedDeposits.dart';
 import 'package:banking_app/LoginPage.dart';
 import 'package:banking_app/ProfilePage.dart';
-import 'package:banking_app/RequestLoan.dart';
 import 'package:banking_app/services/api.dart';
 import 'package:banking_app/services/auth.dart';
 import 'package:banking_app/services/models.dart';
@@ -13,34 +12,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:intl/intl.dart';
 
-import 'TransactionPage.dart';
-
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+class EmployeeDashboardScreen extends StatefulWidget {
+  const EmployeeDashboardScreen({Key? key}) : super(key: key);
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<EmployeeDashboardScreen> createState() =>
+      _EmployeeDashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
   List<Widget> pages = [
-    WalletScreen(customer: CurrentCustomer().currentCustomerValue),
+    HomeScreen(employee: CurrentEmployee().currentEmployeeValue),
     AccountsPage(),
-    RequestLoanPage(),
-    FixedDepositsPage(),
     ProfilePage(),
   ];
   int _widgetIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Customer>(
-      stream: currentCustomer.currentCustomer,
+    return StreamBuilder<Employee>(
+      stream: currentEmployee.currentEmployee,
       builder: (context, snapshot) {
-        if (snapshot.hasData && snapshot.data!.custId != 0) {
+        if (snapshot.hasData && snapshot.data!.empId != 0) {
           pages = [
-            WalletScreen(customer: snapshot.data!),
+            HomeScreen(employee: snapshot.data!),
             AccountsPage(),
-            RequestLoanPage(),
-            FixedDepositsPage(),
             ProfilePage(),
           ];
           return Scaffold(
@@ -62,24 +56,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               selectedLabelStyle: TextStyle(color: Colors.cyan),
               items: [
                 BottomNavigationBarItem(
-                  icon: Icon(Ionicons.wallet_outline),
-                  label: 'Wallet',
-                  activeIcon: Icon(Ionicons.wallet),
-                ),
+                    icon: Icon(Ionicons.wallet_outline),
+                    label: 'Wallet',
+                    activeIcon: Icon(Ionicons.wallet)),
                 BottomNavigationBarItem(
                   activeIcon: Icon(MaterialCommunityIcons.account_cash),
                   icon: Icon(MaterialCommunityIcons.account_cash_outline),
                   label: 'Accounts',
-                ),
-                BottomNavigationBarItem(
-                  activeIcon: Icon(Ionicons.git_pull_request),
-                  icon: Icon(Ionicons.git_pull_request_outline),
-                  label: 'Request loan',
-                ),
-                BottomNavigationBarItem(
-                  activeIcon: Icon(Ionicons.cash),
-                  icon: Icon(Ionicons.cash_outline),
-                  label: 'Fixed Deposits',
                 ),
                 BottomNavigationBarItem(
                   activeIcon: Icon(Ionicons.person),
@@ -108,23 +91,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 }
 
-class WalletScreen extends StatefulWidget {
-  const WalletScreen({
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({
     Key? key,
-    required this.customer,
+    required this.employee,
   }) : super(key: key);
-  final Customer customer;
+  final Employee employee;
 
   @override
-  State<WalletScreen> createState() => _WalletScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _WalletScreenState extends State<WalletScreen> {
+class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  List<Loan> loans = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<Person>(
-        future: getPersonByAadhar(widget.customer.aadharNo),
+        future: getPersonByAadhar(widget.employee.aadharNo),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Padding(
@@ -146,62 +131,41 @@ class _WalletScreenState extends State<WalletScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    TotalAssetsCard(customer: widget.customer),
+                    SalaryCard(employee: widget.employee),
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Transactions',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 28,
-                            color: Colors.white,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return TransactionPage();
-                                },
-                              ),
-                            );
-                          },
-                          icon: Icon(
-                            Ionicons.add_circle_outline,
-                            color: Colors.cyan,
-                            size: 30,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      'Approve Loans',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28,
+                        color: Colors.white,
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    FutureBuilder<List<Transaction>>(
-                      future: getTransactionsByCustId(widget.customer.custId),
+                    FutureBuilder<List<Loan>>(
+                      future: getPendingLoanRequests(widget.employee.branchId),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
+                          loans = snapshot.data!;
                           return Container(
-                            height: 240,
-                            child: ListView.builder(
-                              // physics: ClampingScrollPhysics(),
+                            height: 258,
+                            child: AnimatedList(
+                              key: _listKey,
                               shrinkWrap: true,
-                              // itemExtent: 10,
-
-                              itemCount: snapshot.data!.length,
+                              initialItemCount: loans.length,
                               scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
+                              itemBuilder: (context, index, animation) {
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 8.0),
-                                  child: TransactionCard(
-                                    transaction: snapshot.data![index],
+                                  child: LoanCard(
+                                    loan: loans[index],
+                                    animationKey: _listKey,
+                                    index: index,
+                                    list: loans,
                                   ),
                                 );
                               },
@@ -236,11 +200,11 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 }
 
-class TotalAssetsCard extends StatelessWidget {
-  final Customer customer;
-  const TotalAssetsCard({
+class SalaryCard extends StatelessWidget {
+  final Employee employee;
+  const SalaryCard({
     Key? key,
-    required this.customer,
+    required this.employee,
   }) : super(key: key);
 
   @override
@@ -250,64 +214,61 @@ class TotalAssetsCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      child: FutureBuilder<AssetsLiabilities>(
-          future: getAssetsLiabilities(customer.custId),
-          builder: (context, snapshot) {
-            return Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Total Assets',
-                    style: TextStyle(
-                      fontSize: 16,
-                      // fontFamily: 'Poppins',
-                      color: Colors.cyan,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  snapshot.hasData
-                      ? Text(
-                          '₹${NumberFormat().format(snapshot.data!.assets)}',
-                          style: TextStyle(
-                              fontSize: 56,
-                              // fontFamily: 'Poppins',
-                              height: 1.2,
-                              // color: CustomColors.black90,
-                              fontWeight: FontWeight.bold),
-                        )
-                      : CircularProgressIndicator(),
-                  SizedBox(height: 8),
-                  Container(
-                    child: Divider(color: Colors.cyan[300]),
-                    width: double.infinity,
-                  ),
-                  SizedBox(height: 8),
-                  snapshot.hasData
-                      ? Text(
-                          'Total Liabilities: ₹${NumberFormat().format(snapshot.data!.liabilities)}',
-                          style: TextStyle(
-                              fontSize: 16, color: Colors.blueGrey[200]),
-                        )
-                      : CircularProgressIndicator(),
-                ],
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Salary',
+              style: TextStyle(
+                fontSize: 16,
+                // fontFamily: 'Poppins',
+                color: Colors.cyan,
               ),
-            );
-          }),
+            ),
+            SizedBox(height: 8),
+            Text(
+              '₹${NumberFormat().format(employee.salary)}',
+              style: TextStyle(
+                  fontSize: 56,
+                  // fontFamily: 'Poppins',
+                  height: 1.2,
+                  // color: CustomColors.black90,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Container(
+              child: Divider(color: Colors.cyan[300]),
+              width: double.infinity,
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Branch ID: ${employee.branchId}',
+              style: TextStyle(fontSize: 16, color: Colors.blueGrey[200]),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
 // TransactionCard
-class TransactionCard extends StatelessWidget {
-  const TransactionCard({
+class LoanCard extends StatelessWidget {
+  const LoanCard({
     Key? key,
-    required this.transaction,
+    required this.animationKey,
+    required this.loan,
+    required this.index,
+    required this.list,
   }) : super(key: key);
-  final Transaction transaction;
+  final Loan loan;
+  final GlobalKey<AnimatedListState> animationKey;
+  final int index;
+  final List<Loan> list;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -327,35 +288,24 @@ class TransactionCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${transaction.type}',
+                  '${loan.type}',
                   style: TextStyle(
                     fontSize: 16,
                     // fontFamily: 'Poppins',
                     color: Colors.cyan,
                   ),
                 ),
-                transaction.status == "C"
-                    ? Icon(
-                        Feather.check_circle,
-                        color: Colors.greenAccent,
-                      )
-                    : transaction.status == "F"
-                        ? Icon(Feather.x_circle, color: Colors.red)
-                        : Icon(AntDesign.exclamationcircleo,
-                            color: Colors.orange),
               ],
             ),
             SizedBox(height: 8),
             Text(
-              '${transaction.type == "CREDIT" ? "+" : "-"} ₹${NumberFormat().format(transaction.amount)}',
+              '₹${NumberFormat().format(loan.amount)}',
               style: TextStyle(
                 fontSize: 28,
                 // fontFamily: 'Poppins',
                 height: 1.2,
                 // color: CustomColors.black90,
-                color: transaction.type == "CREDIT"
-                    ? Colors.greenAccent
-                    : Colors.red,
+                color: Colors.red,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -365,35 +315,103 @@ class TransactionCard extends StatelessWidget {
               width: double.infinity,
             ),
             SizedBox(height: 8),
-            Text(
-              transaction.type == "CREDIT" ? 'To:' : 'From:',
-              style: TextStyle(fontSize: 16, color: Colors.blueGrey[200]),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'From:',
+                      style:
+                          TextStyle(fontSize: 16, color: Colors.blueGrey[200]),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      '${loan.dateOfOpening.toString().split(" ")[0]}',
+                      style:
+                          TextStyle(fontSize: 16, color: Colors.blueGrey[200]),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Duration:',
+                      style:
+                          TextStyle(fontSize: 16, color: Colors.blueGrey[200]),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      '${loan.durationMonths} Months',
+                      style:
+                          TextStyle(fontSize: 16, color: Colors.blueGrey[200]),
+                    ),
+                  ],
+                ),
+              ],
             ),
             SizedBox(height: 8),
-            Text(
-              '${transaction.account.toString().substring(0, 4)} ${transaction.account.toString().substring(4, 8)}',
-              style: TextStyle(
-                fontSize: 20,
-                // fontFamily: 'Poppins',
-                fontWeight: FontWeight.bold,
-                color: Colors.cyan,
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              '${transaction.dateTime.toString().split(" ")[0]}',
-              style: TextStyle(fontSize: 16, color: Colors.blueGrey[200]),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () async {
+                    await rejectLoan(loan.requestId);
+                    list.removeAt(index);
+                    animationKey.currentState!.removeItem(
+                      index,
+                      (context, animation) => Container(
+                        height: 250,
+                        width: MediaQuery.of(context).size.width * 2 / 3,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    );
+                  },
+                  child: Text("Reject"),
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(
+                      BorderSide(
+                        color: Colors.cyan,
+                      ),
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await approveLoan(loan.requestId);
+                    list.removeAt(index);
+                    animationKey.currentState!.removeItem(
+                      index,
+                      (context, animation) => Container(
+                        height: 250,
+                        width: MediaQuery.of(context).size.width * 2 / 3,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    );
+                  },
+                  style: ButtonStyle(
+                      foregroundColor:
+                          MaterialStateProperty.all(Colors.blueGrey[700])),
+                  child: Text("Accept"),
+                ),
+              ],
             ),
             SizedBox(height: 8),
             Row(
               children: [
                 Spacer(),
                 Text(
-                  "Transaction Id: ${transaction.transactionId}",
+                  "Request Id: ${loan.requestId}",
                   style: TextStyle(fontSize: 12, color: Colors.blueGrey[200]),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
