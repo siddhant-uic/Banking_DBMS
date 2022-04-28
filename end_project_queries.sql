@@ -99,7 +99,8 @@ WHERE  DATEDIFF(CURDATE(), c.IssueDate) - (c.term_months*30)  < 0);
 
 
 -- count number of people with name from A and they are both customers as well as employees
-
+SELECT COUNT(DISTINCT p.AadharNo) as num_people FROM person p, customer c, employee e
+WHERE p.AadharNo = c.AadharNo AND p.AadharNo = e.AadharNo AND p.firstname LIKE 'R%';
 
 -- number of customers with credit score in blah blah who do not have a credit card
 SELECT c.custid, c.`Credit Score`
