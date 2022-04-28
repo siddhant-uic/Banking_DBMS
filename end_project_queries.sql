@@ -62,12 +62,19 @@ GROUP BY empid;
 -- give 1000rs to all customers below poverty line, that is, having balance less than 5000.
 
 
--- those accounts total withdrawal less than 50000
+-- those accounts total withdrawal less than 5000000
 SELECT a.accountnum, sum(t.amount) as total_withdrawal
 FROM account_c a, transactions t
 WHERE a.accountnum = t.accountnum AND t.type = "DEBIT"
 GROUP BY a.accountnum
 HAVING total_withdrawal < 500000;
+
+-- updated
+SELECT a.`Account#` , sum(t.amount) as total_withdrawal
+FROM account a, transactions t
+WHERE a.`Account#` = t.`Account#` AND t.type = 'DEBIT' AND t.status = 'C'
+GROUP BY a.`Account#`
+HAVING total_withdrawal < 5000000;
 
 
 -- People with less than minimum balance
