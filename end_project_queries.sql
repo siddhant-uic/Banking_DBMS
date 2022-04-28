@@ -90,3 +90,9 @@ WHERE a.accountnum = d.accountnum AND balance < minbalance
 
 
 -- Could add the avg age query since it was not used in midsem
+
+-- acc with card with expired debit cards
+SELECT d.`Account#`, a.balance
+FROM depositoryacc d, account a WHERE d.`Account#` = a.`Account#`
+AND d.`DebitCard#` NOT IN (SELECT c.cardno FROM cards c 
+WHERE  DATEDIFF(CURDATE(), c.IssueDate) - (c.term_months*30)  < 0);
