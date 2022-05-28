@@ -6,6 +6,7 @@ Group Members -
 3. Navidha Jain - 2020223 - navidha20223@iiitd.ac.in
 4. Devyani Koshal - 2020055 - devyani20055@iiitd.ac.in
 
+ER Diagram available in DBMS ER DIAGRAM
 Find the final project report with all the queries in  DBMS_EndEval_REPORT.pdf    
 Find all queries in DBMS_EndEval_REPORT.sql   
 
