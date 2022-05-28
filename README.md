@@ -6,8 +6,8 @@ Group Members -
 3. Navidha Jain - 2020223 - navidha20223@iiitd.ac.in
 4. Devyani Koshal - 2020055 - devyani20055@iiitd.ac.in
 
-Find the final project report with all the queries in  DBMS_EndEval_REPORT.pdf. 
-Find all queries in DBMS_EndEval_REPORT.sql
+Find the final project report with all the queries in  DBMS_EndEval_REPORT.pdf    
+Find all queries in DBMS_EndEval_REPORT.sql   
 
-Backend server implemented using Express.js in the backend branch. 
-Frontend implemented using Flutter in the frontend branch
+Backend server implemented using Express.js in the backend branch   
+Frontend implemented using Flutter in the frontend branch   
